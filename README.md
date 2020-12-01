@@ -1,5 +1,8 @@
 # Azure Infrastructure Operations Project: Deploying a scalable IaaS web server in Azure
 
+### Overview
+This project dmeonstrates uisng **packer** and **terraform** to deploy infrastructure as code to Azure for a simple web server application. DevOps best practices have also been demostrated in the code.
+
 ### Introduction
 For this project, you will write a Packer template and a Terraform template to deploy a customizable, scalable web server in Azure.
 
@@ -20,7 +23,7 @@ For this project, you will write a Packer template and a Terraform template to d
 3. From Azure Portal, grant you app, contributor access to your subscription to allow your app (packer) to create resources in Azure. To do this, search for **Subscriptions** from Azure Portal then select your subscription. Click the **Access control (IAM)** menu then click the **Add role assignments** button. Select the **Contributor** role under **Roles** then search and select your app name in the last search box. Click the **Save** button to add the role assignment.
 4. From the command line, navigate to the root directory of this repository then run the following command to build the packer image: `packer build -var 'client_id={your_client_id}' -var 'client_secret={your_client_secret}' -var 'subscription_id={your_subscription_id}' server.json`. Replace **client_id**, **client_secret** and **subscription_id** with your values before running the command.
 5. Confirm that you are logged into azure cli and have an active subscription selected by running `az account show`. This command should return the details of your currently logged in user and the selected subscription in azure cli. The same credentials will be used by *terraform* in the next steps. If not logged in run `az login` to log into azure cli then run `az account set --subscription {your_subscription_id}` to select y**our subscription.
-6. From the root directory of this repository, update configurable variables in the **vars.tf** file with your preffered **resource prefix**, **azure region** and **size** / number of nodes in your cluster e.t.c.
+6. From the root directory of this repository, update configurable variables in the **vars.tf** file with your preffered **resource prefix**, **location** and **size** (number of nodes in your cluster) by either updating the default values or by entering empty strings so you can be prompted to enter values at runtime when deploying resources.
 7. Since our resource group already exists as we created it in step 1, import it into the terraform configuration state so it can be managed by terraform going forward by running the following command: `terraform import azurerm_resource_group.main "/subscriptions/{your_subscription_id}/resourceGroups/{your_resource_group_name}"`
 6. From the command line, navigate to the root directory of this repository then run the following command to verify the list of resources to be deployed by terraform to azure: `terraform plan`
 7. If the preceding step returns no errors, run the following command to deploy the infrastructure and related resources for the web server application to azure using terraform: `terraform apply`
